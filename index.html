@@ -1,202 +1,55 @@
 <!doctype html>
 <html>
+<div>
+    <div class="row">
+        <h1>I'm Danielle!</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div><img src="http://i.imgur.com/V2s1GO6.jpg" class="img-responsive"></div>
+            <p>I'm a Software Engineer at CDK Global. In my spare time I like to bake, try delicious Portland restaurants, travel when possible, and play with my baby nephew.</p>
+
+        </div>
+        <div class="col-md-4">
+            <div><img src="https://s-media-cache-ak0.pinimg.com/736x/a4/a0/10/a4a010561c88e8bf293ed58dafc8091e.jpg" class="img-responsive"></div>
+            <p>I'm also a big fan of Harry Potter and Parks and Recreation. </p>
+
+        </div>
+        <div class="col-md-4">
+            <div><img src="http://cdn.attackofthecute.com/September-21-2011-22-10-18-4302949671.jpeg" class="img-responsive"></div>
+            <p>When I grow up I want to have a house with a kitchen big enough to hold all of the cooking gadgets that I want, plus a bulldog named Meatball.</p>
+
+        </div>
+    </div>
+</div>
+<div><button type="button" class="btn btn-primary btn-lg center-block" onclick="onClick()">Let's play a game!</button></div>
+
+
+
 <head>
     <meta charset="UTF-8" />
     <title>ChickTech JavaScript</title>
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+
 </head>
 <body>
 
 <script type="text/javascript">
 
-    var score;
-    var countdown;
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
-    function preload() {
-        //load images
-        game.load.image('sky', 'assets/sky.png');
-        game.load.image('ground', 'assets/platform.png');
-        game.load.image('snitch', 'assets/snitch.png');
-        game.load.image('bludger', 'assets/bludger.png');
-        game.load.spritesheet('hp', 'assets/hpsprite.png', 32, 48);
-    }
-
-    function create() {
-        //initialize countdown timer to 15 seconds
-        countdown = 15;
-
-        //initialize score to 0
-        score = 0;
-
-        //add the sky
-        game.add.sprite(0, 0, 'sky');
-
-        //add a group to hold the ground
-        platforms = game.add.group();
-
-        //enable physics on the platforms group
-        platforms.enableBody = true;
-
-        // Here we create the ground.
-        var ground = platforms.create(0, game.world.height - 64, 'ground');
-
-        //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(2, 2);
-
-        //  This stops it from falling away when you jump on it
-        ground.body.immovable = true;
-
-        //add player
-        player = game.add.sprite(32, game.world.height - 150, 'hp');
-
-        //enable physics on player
-        game.physics.arcade.enable(player);
-
-        //give player gravity
-        player.body.gravity.y = 300;
-
-        player.animations.add('left', [4, 5, 6, 7], 10, true);
-        player.animations.add('right', [8, 9, 10, 11], 10, true);
+    var onClick = function() {
+      window.open('/phaser-project/game.html');
+    };
 
 
-        //  Our controls.
-        cursors = game.input.keyboard.createCursorKeys();
-
-        //create group for snitches & the bludgers
-        snitches = game.add.group();
-
-        bludgers = game.add.group();
-
-        //create a physics body
-        snitches.enableBody = true;
-        bludgers.enableBody = true;
-
-        //create new snitches in a loop, every 400 milliseconds
-        game.time.events.loop(400, createSnitch, this);
-
-        game.time.events.loop(2000, createBludger, this);
-
-        //add text for the score and the timer
-        scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-        timeText = game.add.text(600, 16, 'Time: 15', {fontSize: '32px', fill: '#000'});
-
-        //create the timer
-        timer = game.time.create(false);
-
-        //add the timed event of 15000 milliseconds (or 15 seconds) and call timeUp when its done
-        timer.add(15000, timeUp, this);
-
-        //start the timer event
-        timer.start();
-
-        //create a loop to update the countdown text, update every second and call updateCountdown
-        game.time.events.loop(Phaser.Timer.SECOND, updateCountdown);
-
-
-    }
-
-    function update() {
-
-        //check if player touches a snitch - if so, calls collectSnitches
-        game.physics.arcade.overlap(player, snitches, collectSnitches, null, this);
-
-        game.physics.arcade.overlap(player, bludgers, hitByBludger, null, this);
-
-        //check if player is touching the platform - stops from falling through ground
-        game.physics.arcade.collide(player, platforms);
-
-        //  Reset the players velocity (movement)
-        player.body.velocity.x = 0;
-
-        //left key control
-        if (cursors.left.isDown)
-        {
-            //  Move to the left
-            player.body.velocity.x = -200;
-
-            player.animations.play('left');
-        }
-        //right key control
-        else if (cursors.right.isDown)
-        {
-            //  Move to the right
-            player.body.velocity.x = 200;
-
-            player.animations.play('right');
-        }
-        //no keys pressed
-        else
-        {
-            //  Stand still
-            player.animations.stop();
-
-            player.frame = 0;
-        }
-
-    }
-
-    //collect the snitch - increase the score and kill the "collected" snitch
-    function collectSnitches(player, snitch) {
-        score++;
-        snitch.kill();
-        scoreText.text = 'Score: ' + score;
-    }
-
-    //get hit by bludger, decrease score by 2 and kill the bludger to remove it from the screen
-    function hitByBludger(player, bludger) {
-        score-=2;
-        bludger.kill();
-        scoreText.text = 'Score: ' + score;
-    }
-
-    //create each falling snitch
-    function createSnitch() {
-        //generating a random number between 0 & 800 to determine where on the x axis the snitch appears
-        var where = (Math.random() * 800);
-
-        //actually create the snitch
-        var snitch = snitches.create(where, 0, 'snitch');
-
-        //set the value for gravity - controls how fast objects fall
-        snitch.body.gravity.y = 50;
-
-    }
-
-    function createBludger() {
-        //generating a random number between 0 & 800 to determine where on the x axis the snitch appears
-        var where = (Math.random() * 800);
-
-        //actually create the snitch
-        var bludger = bludgers.create(where, 0, 'bludger');
-
-        bludger.scale.setTo(0.1, 0.1);
-        //set the value for gravity - controls how fast objects fall
-        bludger.body.gravity.y = 50;
-    }
-
-    //handle time up event
-    function timeUp() {
-        //stop the loops
-        game.time.events.stop();
-
-        //get rid of all the active snitches
-        snitches.forEach(function(element) {
-            element.kill();
-        });
-
-        //display time up message
-        game.add.text(350, 250, 'Time\'s up!', { fontSize: '32px', fill: '#000' });
-    }
-
-    //update the timer countdown
-    function updateCountdown() {
-        //decrease the countdown value
-        countdown = countdown - 1;
-        //update the display text
-        timeText.text = 'Time: ' + countdown;
-
-    }
 
 
 </script>

@@ -1,0 +1,22 @@
+.button-style {
+    background-color: blue;
+    width: 100px;
+    height: 60px;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+h1 {
+    font-size: 50px;
+    color: blue;
+    text-align: center;
+}
+
+p {
+    font-size: 14px;
+    text-align: center;
+
+}
