@@ -9,6 +9,10 @@
     display: none;
 }
 
+.padding-bottom {
+    padding-bottom: 30px;
+}
+
 h1 {
     font-size: 50px;
     color: blue;
