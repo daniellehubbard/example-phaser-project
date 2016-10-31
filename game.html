@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>ChickTech JavaScript</title>
-    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
 
     <!--loading our CSS file-->
     <link rel="stylesheet" type="text/css" href="mystyle.css">
@@ -33,6 +33,7 @@
     function create() {
         //initialize countdown timer to 15 seconds
         countdown = 15;
+        //test
 
         //initialize score to 0
         score = 0;
@@ -81,9 +82,9 @@
         bludgers.enableBody = true;
 
         //create new snitches in a loop, every 400 milliseconds
-        game.time.events.loop(400, createSnitch, this);
+        game.time.events.loop(400, createSnitch);
 
-        game.time.events.loop(2000, createBludger, this);
+        game.time.events.loop(2000, createBludger);
 
         //add text for the score and the timer
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
