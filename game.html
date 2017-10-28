@@ -19,10 +19,13 @@
 
     var score;
     var countdown;
+    var timeUpText = '';
+    var timer;
+    var gameTime = 15;
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
     function preload() {
-        //load images
+        //load images - the first "argument" here is a key to identify your image
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('snitch', 'assets/snitch.png');
@@ -31,14 +34,9 @@
     }
 
     function create() {
-        //initialize countdown timer to 15 seconds
-        countdown = 15;
-        //test
-
-        //initialize score to 0
-        score = 0;
 
         //add the sky
+        //the first 2 arguments are x and y, then the last is the key of your image
         game.add.sprite(0, 0, 'sky');
 
         //add a group to hold the ground
@@ -57,6 +55,7 @@
         ground.body.immovable = true;
 
         //add player
+        //the first 2 arguments are x and y, then the last is the key of your image
         player = game.add.sprite(32, game.world.height - 150, 'hp');
 
         //enable physics on player
@@ -81,27 +80,22 @@
         snitches.enableBody = true;
         bludgers.enableBody = true;
 
-        //create new snitches in a loop, every 400 milliseconds
-        game.time.events.loop(400, createSnitch);
-
-        game.time.events.loop(2000, createBludger);
-
-        //add text for the score and the timer
+                //add text for the score and the timer
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-        timeText = game.add.text(600, 16, 'Time: 15', {fontSize: '32px', fill: '#000'});
+        timeText = game.add.text(600, 16, 'Time: ' + gameTime, {fontSize: '32px', fill: '#000'});
+
+        scoreText.visible = false;
+        timeText.visible = false;
+
 
         //create the timer
         timer = game.time.create(false);
 
-        //add the timed event of 15000 milliseconds (or 15 seconds) and call timeUp when its done
-        timer.add(15000, timeUp, this);
 
-        //start the timer event
-        timer.start();
+        introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+        introText.anchor.setTo(0.5, 0.5);
 
-        //create a loop to update the countdown text, update every second and call updateCountdown
-        game.time.events.loop(Phaser.Timer.SECOND, updateCountdown);
-
+        game.input.onDown.add(startGame, this);
 
     }
 
@@ -145,6 +139,42 @@
 
     }
 
+    function startGame(){
+        //set countdown to our global "game time" variable
+        countdown = gameTime;
+        timeText.text = 'Time: ' + countdown;
+        
+        //initialize score to 0 and update score text
+        score = 0;
+        scoreText.text = 'Score: ' + score;
+
+        //if we are showing time up text, stop showing
+        if(timeUpText) {
+            timeUpText.visible = false;
+        }
+
+        //don't show intro text
+        introText.visible = false;
+
+        //create new snitches in a loop, every 400 milliseconds
+        timer.loop(400, createSnitch);
+
+        timer.loop(2000, createBludger);
+
+        //create a loop to update the countdown text, update every second and call updateCountdown
+        countdownTimer = timer.loop(Phaser.Timer.SECOND, updateCountdown);
+
+        //add the timer event of game time * 1000 (since it is in milliseconds) and call timeUp when its done
+        timer.add(gameTime*1000, timeUp, this);
+
+        //start the timer event
+        timer.start();
+        timeText.visible = true;
+        scoreText.visible = true;
+
+    }
+
+
     //collect the snitch - increase the score and kill the "collected" snitch
     function collectSnitches(player, snitch) {
         score++;
@@ -187,15 +217,23 @@
     //handle time up event
     function timeUp() {
         //stop the loops
-        game.time.events.stop();
+        timer.stop();
 
         //get rid of all the active snitches
         snitches.forEach(function(element) {
             element.kill();
         });
 
+        bludgers.forEach(function(element) {
+            element.kill();
+        });
+
         //display time up message
-        game.add.text(350, 250, 'Time\'s up!', { fontSize: '32px', fill: '#000' });
+        timeUpText = game.add.text(350, 250, 'Time\'s up!', { fontSize: '32px', fill: '#000' });
+
+        introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+        introText.anchor.setTo(0.5, 0.5);
+
     }
 
     //update the timer countdown
