@@ -24,3 +24,17 @@ p {
     text-align: center;
 
 }
+
+body {
+  background-color: purple;
+}
+
+.column { 
+  background-color: white;
+  text-align: center;
+
+}
+
+label {
+  display: block;
+}
