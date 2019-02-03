@@ -1,65 +1,123 @@
 <!doctype html>
 <html>
+
 <head>
-    <!-- This is where we load JavaScript files that we need - here I'm loading phaser and bootstrap (a bunch of helpful classes
+  <!-- This is where we load JavaScript files that we need - here I'm loading phaser and bootstrap (a bunch of helpful classes
     to make your websites look more modern and fancy!)-->
-    <meta charset="UTF-8" />
-    <title>ChickTech JavaScript</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <title>ChickTech JavaScript</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <!--loading our CSS file-->
-    <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <!--loading our CSS file-->
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
 
 </head>
+
 <body>
-
-<div>
-    <!--These "row" and "col-md-4" classes are from bootstrap-->
-    <div class="row">
-        <h1>I'm Danielle!</h1>
+  <!--Build your about me page here!-->
+  <div class="row">
+    <h1>About Danielle</h1>
+  </div>
+  <div class="row padding-bottom">
+    <div class="col-md-4 column">
+      <img height="300" width="450" src="https://farm6.staticflickr.com/5825/30804293371_6d5ccdef05_k.jpg">
+      
+      <label>I have been a software engineer for 5 years</label>
+      I love writing JavaScript at work and teaching workshops like this one!
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div><img src="http://i.imgur.com/V2s1GO6.jpg" class="img-responsive"></div>
-            <p>I'm a Software Engineer at CDK Global. In my spare time I like to bake, try delicious Portland restaurants, travel when possible, and play with my baby nephew.</p>
-
-        </div>
-        <div class="col-md-4">
-            <div><img src="https://s-media-cache-ak0.pinimg.com/736x/a4/a0/10/a4a010561c88e8bf293ed58dafc8091e.jpg" class="img-responsive"></div>
-            <p>I'm also a big fan of Harry Potter and Parks and Recreation. </p>
-
-        </div>
-        <div class="col-md-4">
-            <div><img src="http://cdn.attackofthecute.com/September-21-2011-22-10-18-4302949671.jpeg" class="img-responsive"></div>
-            <p>When I grow up I want to have a house with a kitchen big enough to hold all of the cooking gadgets that I want, plus a bulldog named Meatball.</p>
-
-        </div>
+    <div class="col-md-4 column">
+      <img src="https://i.imgur.com/wZNFkMp.jpg" height="300" width="450">
+      <label>I went to college in Texas at Midwestern State University</label>
+      I got a degree in mathematics with a minor in computer science.
+      
     </div>
-    <button onclick="onClick()">Click me</button>
+    <div class="col-md-4 column">
+      <img height="300" width="450" src="https://lh3.googleusercontent.com/rt-s-OubdDP84YOiwqHSqnCSl5wZ4Z0k3huxpLmzG4W9Ec8PkiIumm_71eAg1t_oHl4q3vPOYHvBqpoJvT4lkCBBX5kjwfYZhWjPgE8HasinIbV5-GHDzV1KB23KubGDnx8tFiim=w2400">
+      <label>I got married last summer</label>
+      I got married in Hood River, OR in July 2018.
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 column">
+        <ul>
+            <h2>Some websites I like:</h2>
+    
+          <li>
+              <a href="https://www.pluralsight.com/codeschool">Code School</a>
+          </li>
+          <li>
+              <a href="https://www.codecademy.com/learn">Code Academy</a>
+          </li>
+          <li>
+            <a href="https://www.w3schools.com/">w3 schools</a>
+          </li>
+        </ul>
+    </div>
+    <div class="col-md-4 column">
+      <ul>
+        <h2>My hobbies:</h2>
+        <li>
+          Cooking
+        </li>
+        <li>
+          Reading
+        </li>
+        <li>
+          Working with ChickTech
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4 column">
+        <ul>
+          <h2>My favorite foods:</h2>
+          <li>
+            Cookies
+          </li>
+          <li>
+            Pizza
+          </li>
+          <li>
+            Gyros
+          </li>
+        </ul>
+      </div>
+    
+    
+  </div>
+  <div class="row" style="margin-top: 10px">
+    <div class="col-md-4 col-md-offset-4">
+      <div style="text-align: center">
+          <button onclick="onClick()">Click me</button>
+      </div>
+      
 
-</div>
-<!--The btn classes are also bootstrap-->
-<div><button type="button" class="btn btn-primary btn-lg center-block" onclick="onClick()">Let's play a game!</button></div>
+    </div>
+  </div>
 
-<script type="text/javascript">
+
+  <!--END HTML FOR ABOUT ME PAGE-->
+
+  <!--Put any javascript here-->
+  <script type="text/javascript">
 
     //this opens a new window when you click the button with our game html! Since an entire URL is not specified,
     //it opens relative to your current path - if you are on www.mywebsite.com/index.html, this would go to
     //www.mywebsite.com/game.html
-    var onClick = function() {
-      window.open('game.html');
+    var onClick = function () {
+      window.open('/game.html');
     };
 
 
-</script>
+  </script>
 
 </body>
+
 </html>
